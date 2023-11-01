@@ -1,57 +1,83 @@
+import { useContext } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+import { AuthContext } from "../components/context/authContext";
 
 const BASE_URL = "http://localhost:8000";
 
-const fetchData = async (endpoint) => {
-  const { data } = await axios.get(`${BASE_URL}/${endpoint}`);
-  return data;
+const fetchData = async (endpoint, user) => {
+  try {
+    const { data, status } = await axios.get(`${BASE_URL}/${endpoint}`, {
+      headers: {
+        Authorization: `Bearer ${user?.token}`,
+      },
+    });
+    if (!(status === 200)) {
+      throw new Error("could not fetch data...");
+    }
+    return data;
+  } catch (err) {
+    throw new Error("oops");
+  }
 };
 
-export const postData = async (endpoint, data) => {
-    try {
-      const response = await fetch(`${BASE_URL}/${endpoint}`, {
-        method: "POST",
+const postData = async (endpoint, payload, user) => {
+  try {
+    const { data, status } = await axios.post(
+      `${BASE_URL}/${endpoint}`,
+      payload,
+      {
         headers: {
-          "Content-Type": "application/json",
+          Authorization: `Bearer ${user?.token}`,
         },
-        body: JSON.stringify(data),
-      });
-      if(!response.ok) {
-        throw new Error("oops")
-      } 
-      return response.json();
-    } catch (err) {
-      throw new Error("oops")
+      }
+    );
+    if (!(status === 200)) {
+      throw new Error("could not post data...");
     }
-  };
-  
+    return data;
+  } catch (err) {
+    throw new Error("oops");
+  }
+};
 
 //custom hook for get requests
-export const useGet = (endpoint, queryKey) => {
-  const queryKeyValue =
-    typeof queryKey === "object" ? [...queryKey] : [queryKey];
 
-  return useQuery({
-    queryKey: queryKeyValue,
-    queryFn: () => fetchData(endpoint),
-    refetchOnMount: true,
-    retryOnMount: true,
-  });
+const useRequest = () => {
+  const { user } = useContext(AuthContext);
+
+  const useGet = (endpoint, queryKey) => {
+    const queryKeyValue =
+      typeof queryKey === "object" ? [...queryKey] : [queryKey];
+
+    return useQuery({
+      queryKey: queryKeyValue,
+      queryFn: () => fetchData(endpoint, user),
+      refetchOnMount: true,
+      retryOnMount: true,
+    });
+  };
+
+  //custom hook for post request
+  const usePost = (endpoint, querykey) => {
+    const queryClient = useQueryClient();
+
+    // Mutations
+    const mutation = useMutation({
+      mutationFn: (payload) => postData(endpoint, payload, user),
+      onSuccess: () => {
+        // Invalidate and refetch
+        queryClient.invalidateQueries({ queryKey: [querykey] });
+      },
+    });
+
+    return mutation;
+  };
+
+  return {
+    useGet,
+    usePost,
+  };
 };
 
-//custom hook for post request
-export const usePost = (endpoint, querykey) => {
-  const queryClient = useQueryClient();
-
-  // Mutations
-  const mutation = useMutation({
-    mutationFn: (data) => postData(endpoint, data),
-    onSuccess: () => {
-      // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: [querykey] });
-    },
-  });
-
-  return mutation;
-};
+export default useRequest;

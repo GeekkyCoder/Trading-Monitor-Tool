@@ -6,11 +6,11 @@ import { Box, Card, TextField } from "../../constants/muiConstants";
 import { blueGrey } from "@mui/material/colors";
 import Typography from "../../components/Typography/Typography";
 import FormButton from "../../components/FormButton/FormButton";
-import { usePost } from "../../hooks/useRequest";
 import { AuthContext } from "../../components/context/authContext";
 import Notification from "../../components/Notification/Notification";
 import useSnackbar from "../../hooks/useSnackBar";
 import { useNavigate } from "react-router-dom";
+import useRequest from "../../hooks/useRequest";
 // import { yupResolver } from "@hookform/resolvers/yup";
 
 // const loginFormSchema = yup.object().shape({
@@ -18,6 +18,8 @@ import { useNavigate } from "react-router-dom";
 // });
 
 function Login() {
+  const { usePost } = useRequest();
+
   const {
     mutateAsync,
     isError: registerError,

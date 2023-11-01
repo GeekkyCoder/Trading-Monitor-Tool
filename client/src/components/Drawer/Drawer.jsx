@@ -24,10 +24,11 @@ const drawerWidth = 240;
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import {
   DomainOutlined,
-  PersonOutlineOutlined,
-  StoreOutlined,
+  DataSaverOffOutlined,
+  SummarizeOutlined,
 } from "@mui/icons-material";
 import { useTheme } from "@mui/material";
+
 // import PersonIcon from "@mui/icons-material/Person";
 
 // import AssignmentIcon from "@mui/icons-material/Assignment";
@@ -38,8 +39,8 @@ export const menus = [
   {
     id: 1,
     route: {
-      name: "sysAdmin/dashboard",
-      title: "Dashboard Home",
+      name: "dashboard",
+      title: "Home",
       icon: <DashboardIcon sx={{ color: "black" }} />,
     },
     active: true,
@@ -47,27 +48,18 @@ export const menus = [
   {
     id: 2,
     route: {
-      name: "sysAdmin/user_managment",
-      title: "User Management",
-      icon: <PersonOutlineOutlined sx={{ color: "black" }} />,
+      name: "trade-management",
+      title: "Trade Management",
+      icon: <DataSaverOffOutlined sx={{ color: "black" }} />,
     },
     active: false,
   },
   {
     id: 3,
     route: {
-      name: "sysAdmin/domain_managment",
-      title: "Domain Managment",
-      icon: <DomainOutlined sx={{ color: "black" }} />,
-    },
-    active: false,
-  },
-  {
-    id: 4,
-    route: {
-      name: "sysAdmin/organization_managment",
-      title: "Organization Managment",
-      icon: <StoreOutlined sx={{ color: "black" }} />,
+      name: "reports",
+      title: "Generate Reports",
+      icon: <SummarizeOutlined sx={{ color: "black" }} />,
     },
     active: false,
   },

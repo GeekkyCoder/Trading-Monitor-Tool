@@ -40,7 +40,8 @@ import {
     Tooltip,
     tooltipClasses,
     Badge,
-    IconButton
+    IconButton,
+    Skeleton
   } from "@mui/material";
   
   export {
@@ -85,5 +86,6 @@ import {
     Tooltip,
     tooltipClasses,
     Badge,
-    IconButton
+    IconButton,
+    Skeleton
   };

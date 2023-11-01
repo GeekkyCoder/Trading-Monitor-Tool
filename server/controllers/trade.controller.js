@@ -143,8 +143,11 @@ const deleteATrade = async (req, res) => {
 
 const getWeeklyProfitLoss = async (req, res) => {
   const today = new Date();
-  const oneWeekAgo = new Date(today);
-  oneWeekAgo.setDate(today.getDate() - 7);
+  const currentWeekStart = new Date(today);
+  currentWeekStart.setDate(today.getDate() - today.getDay()); // Start of the current week (Sunday)
+
+  const upcomingWeekStart = new Date(currentWeekStart);
+  upcomingWeekStart.setDate(currentWeekStart.getDate() + 7);
 
   try {
     const result = await TradeModel.aggregate([
@@ -153,7 +156,86 @@ const getWeeklyProfitLoss = async (req, res) => {
       },
       {
         $match: {
-          "trade_history.date": { $gte: oneWeekAgo, $lte: today },
+          "trade_history.date": { $gte: currentWeekStart, $lte: upcomingWeekStart },
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          total_profit: { $sum: "$trade_history.profit" },
+          total_loss: { $sum: "$trade_history.loss" },
+        },
+      },
+    ]);
+    res.status(200).json({ data: result,date:{currentWeekStart,upcomingWeekStart} });
+  } catch (err) {
+    res.status(500).json({ status: "error", msg: `could not update entry` });
+  }
+};
+
+const getMonthlyProfitLoss = async (req, res) => {
+  const today = new Date();
+  const currentMonthStart = new Date(today.getFullYear(), today.getMonth(), 1);
+  const upcomingMonthStart = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+
+  try {
+    const result = await TradeModel.aggregate([
+      {
+        $unwind: "$trade_history",
+      },
+      {
+        $match: {
+          "trade_history.date": { $gte: currentMonthStart, $lt: upcomingMonthStart },
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          total_profit: { $sum: "$trade_history.profit" },
+          total_loss: { $sum: "$trade_history.loss" },
+        },
+      },
+    ]);
+    res.status(200).json({ data: result, date: { currentMonthStart, upcomingMonthStart } });
+  } catch (err) {
+    res.status(500).json({ status: "error", msg: "Could not update entry" });
+  }
+};
+
+const getOverallProfitLoss = async (req, res) => {
+  try {
+    const result = await TradeModel.aggregate([
+      {
+        $unwind: "$trade_history",
+      },
+      {
+        $group: {
+          _id: null,
+          total_profit: { $sum: "$trade_history.profit" },
+          total_loss: { $sum: "$trade_history.loss" },
+        },
+      },
+    ]);
+    res.status(200).json({ data: result });
+  } catch (err) {
+    res.status(500).json({ status: "error", msg: `could not update entry` });
+  }
+};
+
+const getSpecificMonthAndYearStats = async (req, res) => {
+  const { year, month } = req.query;
+
+  const startOfMonth = new Date(`${year}-${month}-01`);
+  const endOfMonth = new Date(year, month, 0);
+
+  try {
+    const result = await TradeModel.aggregate([
+      {
+        $unwind: "$trade_history",
+      },
+      {
+        $match: {
+          "trade_history.date": { $gte: startOfMonth, $lte: endOfMonth },
         },
       },
       {
@@ -170,41 +252,50 @@ const getWeeklyProfitLoss = async (req, res) => {
   }
 };
 
-const getMonthlyProfitLoss = async (req, res) => {
+const getAllMonthProfitLoss = async (req, res) => {
   const today = new Date();
-  const oneMonthAgo = new Date(today);
-  oneMonthAgo.setMonth(today.getMonth() - 1);
+  const currentYear = today.getFullYear();
+  const currentMonth = today.getMonth();
+  let results = [];
 
-  // yearly
-//   const today = new Date();
-// const oneYearAgo = new Date(today);
-// oneYearAgo.setFullYear(today.getFullYear() - 1)
+  for (let month = currentMonth; month < 12; month++) {
+    const currentMonthStart = new Date(currentYear, month, 1);
+    const upcomingMonthStart = new Date(currentYear, month + 1, 1);
 
-  try {
-    const result = await TradeModel.aggregate([
-      {
-        $unwind: "$trade_history",
-      },
-      {
-        $match: {
-          "trade_history.date": { $gte: oneMonthAgo, $lte: today },
+    try {
+      const result = await TradeModel.aggregate([
+        {
+          $unwind: "$trade_history",
         },
-      },
-      {
-        $group: {
-          _id: null,
-          total_profit: { $sum: "$trade_history.profit" },
-          total_loss: { $sum: "$trade_history.loss" },
+        {
+          $match: {
+            "trade_history.date": { $gte: currentMonthStart, $lt: upcomingMonthStart },
+          },
         },
-      },
-    ]);
-    res.status(200).json({ data: result });
-  } catch (err) {
-    return res
-      .status(500)
-      .json({ status: "error", msg: `could not generate monthly report` });
+        {
+          $group: {
+            _id: null,
+            total_profit: { $sum: "$trade_history.profit" },
+            total_loss: { $sum: "$trade_history.loss" },
+          },
+        },
+      ]);
+
+      results.push({
+        month: currentMonthStart.getMonth() + 1, // Add 1 because months are zero-based
+        year: currentMonthStart.getFullYear(),
+        profit: result[0].total_profit,
+        loss: result[0].total_loss,
+      });
+    } catch (err) {
+      res.status(500).json({ status: "error", msg: "Could not update entry" });
+      return; 
+    }
   }
+
+  res.status(200).json({ data: results });
 };
+
 
 module.exports = {
   addATrade,
@@ -216,4 +307,7 @@ module.exports = {
   getWeeklyProfitLoss,
   getMonthlyProfitLoss,
   UpdateProfitAndLoss,
+  getOverallProfitLoss,
+  getSpecificMonthAndYearStats,
+  getAllMonthProfitLoss
 };

@@ -53,7 +53,7 @@ const loginUser = async (req, res) => {
         .json({ status: "error", msg: "invalid credentials -username" });
     }
 
-    const token = generateToken(foundUser);
+    const token = await generateToken(foundUser);
     return res.status(200).json({ data: foundUser, token });
   } catch (err) {
     return res
