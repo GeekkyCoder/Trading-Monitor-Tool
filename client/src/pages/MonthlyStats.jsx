@@ -141,7 +141,8 @@ const MonthlyStats = ({
                   {monthlyStats?.data[0]?.total_profit &&
                   monthlyStats?.data[0]?.total_loss
                     ? monthlyStats?.data[0]?.total_profit -
-                      monthlyStats?.data[0]?.total_loss
+                      monthlyStats?.data[0]?.total_loss < 0 ? "0.00" : parseFloat(monthlyStats?.data[0]?.total_profit -
+                        monthlyStats?.data[0]?.total_loss).toFixed(2)
                     : parseFloat("0.00")}
                 </Typography>
               </Typography>

@@ -4,6 +4,7 @@ import axios from "axios";
 import { AuthContext } from "../components/context/authContext";
 
 const BASE_URL = "https://uk-trader-backend.vercel.app";
+// const BASE_URL = "http://localhost:8000"
 
 const deleteData = async (endpoint, user) => {
   try {

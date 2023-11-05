@@ -8,9 +8,7 @@ import { useTheme } from "@mui/material";
 import { Box, Card, Avatar, Skeleton } from "../constants/muiConstants";
 
 const WeeklyStats = ({ weeklyStats, weeklyStatsError, weeklyStatsLoading }) => {
-
-
-  const {theme} = useTheme()
+  const { theme } = useTheme();
 
   return (
     <>
@@ -18,7 +16,10 @@ const WeeklyStats = ({ weeklyStats, weeklyStatsError, weeklyStatsLoading }) => {
         <Box>
           <Box sx={{ position: "relative", height: "100%" }}>
             <Box sx={{ position: "absolute", top: "-10%", left: "5%" }}>
-              <Avatar sx={{ bgcolor: theme?.palette?.primary?.main }} variant="rounded">
+              <Avatar
+                sx={{ bgcolor: theme?.palette?.primary?.main }}
+                variant="rounded"
+              >
                 <AssignmentIcon />
               </Avatar>
             </Box>
@@ -47,7 +48,7 @@ const WeeklyStats = ({ weeklyStats, weeklyStatsError, weeklyStatsLoading }) => {
                 >
                   {weeklyStats?.data[0]?.total_profit
                     ? weeklyStats?.data[0]?.total_profit
-                    : parseFloat("0.00")}
+                    : parseFloat("0.00").toFixed(2)}
                 </Typography>
               </Typography>
             </Card>
@@ -61,7 +62,10 @@ const WeeklyStats = ({ weeklyStats, weeklyStatsError, weeklyStatsLoading }) => {
         <Box>
           <Box sx={{ position: "relative", height: "100%" }}>
             <Box sx={{ position: "absolute", top: "-10%", left: "5%" }}>
-              <Avatar sx={{ bgcolor: theme?.palette?.primary?.main }} variant="rounded">
+              <Avatar
+                sx={{ bgcolor: theme?.palette?.primary?.main }}
+                variant="rounded"
+              >
                 <SentimentDissatisfiedOutlinedIcon />
               </Avatar>
             </Box>
@@ -89,7 +93,9 @@ const WeeklyStats = ({ weeklyStats, weeklyStatsError, weeklyStatsLoading }) => {
                     mt: ".5em",
                   }}
                 >
-                  {weeklyStats?.data[0]?.total_loss ? weeklyStats?.data[0]?.total_loss : parseFloat("0.00") }
+                  {weeklyStats?.data[0]?.total_loss
+                    ? weeklyStats?.data[0]?.total_loss
+                    : parseFloat("0.00").toFixed(2)}
                 </Typography>
               </Typography>
             </Card>
@@ -103,7 +109,10 @@ const WeeklyStats = ({ weeklyStats, weeklyStatsError, weeklyStatsLoading }) => {
         <Box>
           <Box sx={{ position: "relative", height: "100%" }}>
             <Box sx={{ position: "absolute", top: "-10%", left: "5%" }}>
-              <Avatar sx={{ bgcolor: theme?.palette?.primary?.main }} variant="rounded">
+              <Avatar
+                sx={{ bgcolor: theme?.palette?.primary?.main }}
+                variant="rounded"
+              >
                 <TagFacesOutlinedIcon />
               </Avatar>
             </Box>
@@ -133,8 +142,16 @@ const WeeklyStats = ({ weeklyStats, weeklyStatsError, weeklyStatsLoading }) => {
                 >
                   +{" "}
                   {weeklyStats?.data[0]?.total_profit &&
-                    weeklyStats?.data[0]?.total_loss ? weeklyStats?.data[0]?.total_profit -
-                    weeklyStats?.data[0]?.total_loss : parseFloat("0.00") }
+                  weeklyStats?.data[0]?.total_loss
+                    ? weeklyStats?.data[0]?.total_profit -
+                        weeklyStats?.data[0]?.total_loss <
+                      0
+                      ? "0.00"
+                      : parseFloat(
+                          weeklyStats?.data[0]?.total_profit -
+                            weeklyStats?.data[0]?.total_loss
+                        ).toFixed(2)
+                    : parseFloat("0.00").toFixed(2)}
                 </Typography>
               </Typography>
             </Card>

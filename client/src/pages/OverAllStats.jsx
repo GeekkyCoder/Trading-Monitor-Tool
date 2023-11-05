@@ -12,9 +12,7 @@ const OverAllStats = ({
   overAllStatsLoading,
   overAllStatsError,
 }) => {
-
-
-const {theme} = useTheme()
+  const { theme } = useTheme();
 
   return (
     <>
@@ -22,7 +20,10 @@ const {theme} = useTheme()
         <Box>
           <Box sx={{ position: "relative", height: "100%" }}>
             <Box sx={{ position: "absolute", top: "-10%", left: "5%" }}>
-              <Avatar sx={{ bgcolor: theme?.palette?.primary?.main }} variant="rounded">
+              <Avatar
+                sx={{ bgcolor: theme?.palette?.primary?.main }}
+                variant="rounded"
+              >
                 <AssignmentIcon />
               </Avatar>
             </Box>
@@ -31,7 +32,7 @@ const {theme} = useTheme()
                 height: "100%",
                 pt: "4em",
                 textAlign: "center",
-                backgroundColor:theme?.palette?.primary?.main
+                backgroundColor: theme?.palette?.primary?.main,
               }}
             >
               <Typography
@@ -64,7 +65,10 @@ const {theme} = useTheme()
         <Box>
           <Box sx={{ position: "relative", height: "100%" }}>
             <Box sx={{ position: "absolute", top: "-10%", left: "5%" }}>
-              <Avatar sx={{ bgcolor:  theme?.palette?.primary?.main }} variant="rounded">
+              <Avatar
+                sx={{ bgcolor: theme?.palette?.primary?.main }}
+                variant="rounded"
+              >
                 <SentimentDissatisfiedOutlinedIcon />
               </Avatar>
             </Box>
@@ -88,7 +92,7 @@ const {theme} = useTheme()
                   sx={{
                     fontSize: "inherit",
                     fontWeight: "800",
-                    color:  theme?.palette?.primary?.main,
+                    color: theme?.palette?.primary?.main,
                     mt: ".5em",
                   }}
                 >
@@ -106,7 +110,10 @@ const {theme} = useTheme()
         <Box>
           <Box sx={{ position: "relative", height: "100%" }}>
             <Box sx={{ position: "absolute", top: "-10%", left: "5%" }}>
-              <Avatar sx={{ bgcolor:  theme?.palette?.primary?.main }} variant="rounded">
+              <Avatar
+                sx={{ bgcolor: theme?.palette?.primary?.main }}
+                variant="rounded"
+              >
                 <TagFacesOutlinedIcon />
               </Avatar>
             </Box>
@@ -130,13 +137,19 @@ const {theme} = useTheme()
                   sx={{
                     fontSize: "inherit",
                     fontWeight: "800",
-                    color:  theme?.palette?.primary?.main,
+                    color: theme?.palette?.primary?.main,
                     mt: ".5em",
                   }}
                 >
                   +{" "}
                   {overAllStats?.data[0]?.total_profit -
-                    overAllStats?.data[0]?.total_loss}
+                    overAllStats?.data[0]?.total_loss <
+                  0
+                    ? "0.00"
+                    : parseFloat(
+                        overAllStats?.data[0]?.total_profit -
+                          overAllStats?.data[0]?.total_loss
+                      ).toFixed(2)}
                 </Typography>
               </Typography>
             </Card>
