@@ -69,7 +69,9 @@ const Reoprts = () => {
                 Total Profit:
               </Typography>{" "}
               <Typography component={"span"} variant="p" sx={{ mr: "1em" }}>
-                <strong>$ {tradeData[0].total_profit}</strong>
+                <strong>
+                  $ {parseFloat(tradeData[0].total_profit).toFixed(2)}
+                </strong>
               </Typography>{" "}
             </Box>
             <Box
@@ -84,7 +86,9 @@ const Reoprts = () => {
                 Total loss:
               </Typography>{" "}
               <Typography component={"span"} variant="p" sx={{ mr: "1em" }}>
-                <strong>$ {tradeData[0].total_loss}</strong>
+                <strong>
+                  $ {parseFloat(tradeData[0].total_loss).toFixed(2)}
+                </strong>
               </Typography>{" "}
             </Box>
             <Divider />
@@ -100,8 +104,13 @@ const Reoprts = () => {
                 Total Gain:
               </Typography>{" "}
               <Typography component={"span"} variant="p" sx={{ mr: "1em" }}>
+                {tradeData[0].total_profit - tradeData[0].total_loss > 0
+                  ? "+"
+                  : ""}
                 <strong>
-                  $ {tradeData[0].total_profit - tradeData[0].total_loss}
+                  {parseFloat(
+                    tradeData[0].total_profit - tradeData[0].total_loss
+                  ).toFixed(2)}
                 </strong>
               </Typography>{" "}
             </Box>
