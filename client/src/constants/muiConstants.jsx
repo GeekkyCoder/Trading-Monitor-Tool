@@ -41,7 +41,10 @@ import {
     tooltipClasses,
     Badge,
     IconButton,
-    Skeleton
+    Skeleton,
+    AlertTitle,
+    SpeedDial,
+    SpeedDialAction
   } from "@mui/material";
   
   export {
@@ -87,5 +90,8 @@ import {
     tooltipClasses,
     Badge,
     IconButton,
-    Skeleton
+    Skeleton,
+    AlertTitle,
+    SpeedDial,
+    SpeedDialAction
   };

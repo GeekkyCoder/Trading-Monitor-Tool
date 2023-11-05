@@ -1,4 +1,3 @@
-import { green, red } from "@mui/material/colors";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import TagFacesOutlinedIcon from "@mui/icons-material/TagFacesOutlined";
 import SentimentDissatisfiedOutlinedIcon from "@mui/icons-material/SentimentDissatisfiedOutlined";
@@ -6,18 +5,24 @@ import Typography from "../components/Typography/Typography";
 
 import { Box, Card, Avatar, Skeleton } from "../constants/muiConstants";
 
+import { useTheme } from "@mui/material";
+
 const OverAllStats = ({
   overAllStats,
   overAllStatsLoading,
   overAllStatsError,
 }) => {
+
+
+const {theme} = useTheme()
+
   return (
     <>
       {!overAllStatsLoading ? (
         <Box>
           <Box sx={{ position: "relative", height: "100%" }}>
             <Box sx={{ position: "absolute", top: "-10%", left: "5%" }}>
-              <Avatar sx={{ bgcolor: green[500] }} variant="rounded">
+              <Avatar sx={{ bgcolor: theme?.palette?.primary?.main }} variant="rounded">
                 <AssignmentIcon />
               </Avatar>
             </Box>
@@ -26,6 +31,7 @@ const OverAllStats = ({
                 height: "100%",
                 pt: "4em",
                 textAlign: "center",
+                backgroundColor:theme?.palette?.primary?.main
               }}
             >
               <Typography
@@ -40,7 +46,7 @@ const OverAllStats = ({
                   sx={{
                     fontSize: "inherit",
                     fontWeight: "800",
-                    color: green["800"],
+                    color: theme?.palette?.primary?.main,
                     mt: ".5em",
                   }}
                 >
@@ -58,7 +64,7 @@ const OverAllStats = ({
         <Box>
           <Box sx={{ position: "relative", height: "100%" }}>
             <Box sx={{ position: "absolute", top: "-10%", left: "5%" }}>
-              <Avatar sx={{ bgcolor: red[500] }} variant="rounded">
+              <Avatar sx={{ bgcolor:  theme?.palette?.primary?.main }} variant="rounded">
                 <SentimentDissatisfiedOutlinedIcon />
               </Avatar>
             </Box>
@@ -82,7 +88,7 @@ const OverAllStats = ({
                   sx={{
                     fontSize: "inherit",
                     fontWeight: "800",
-                    color: red["A700"],
+                    color:  theme?.palette?.primary?.main,
                     mt: ".5em",
                   }}
                 >
@@ -100,7 +106,7 @@ const OverAllStats = ({
         <Box>
           <Box sx={{ position: "relative", height: "100%" }}>
             <Box sx={{ position: "absolute", top: "-10%", left: "5%" }}>
-              <Avatar sx={{ bgcolor: green[500] }} variant="rounded">
+              <Avatar sx={{ bgcolor:  theme?.palette?.primary?.main }} variant="rounded">
                 <TagFacesOutlinedIcon />
               </Avatar>
             </Box>
@@ -124,7 +130,7 @@ const OverAllStats = ({
                   sx={{
                     fontSize: "inherit",
                     fontWeight: "800",
-                    color: green["800"],
+                    color:  theme?.palette?.primary?.main,
                     mt: ".5em",
                   }}
                 >

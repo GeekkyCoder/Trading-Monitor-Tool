@@ -7,17 +7,20 @@ import { theme } from "./theme/theme.js";
 
 import { client, QueryClientProvider } from "./utils/utils.js";
 import { AuthContextProvider } from "./components/context/authContext.jsx";
+import { ThemeContextProvider } from "./context/themeContext/theme.context.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <AuthContextProvider>
-        <QueryClientProvider client={client}>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
-        </QueryClientProvider>
-      </AuthContextProvider>
+      <ThemeContextProvider>
+        <AuthContextProvider>
+          <QueryClientProvider client={client}>
+            <BrowserRouter>
+              <App />
+            </BrowserRouter>
+          </QueryClientProvider>
+        </AuthContextProvider>
+      </ThemeContextProvider>
     </ThemeProvider>
   </React.StrictMode>
 );

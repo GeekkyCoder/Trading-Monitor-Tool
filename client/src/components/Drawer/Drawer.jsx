@@ -19,51 +19,9 @@ import {
 
 import { Outlet } from "react-router-dom";
 
-const drawerWidth = 240;
-
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import {
-  DomainOutlined,
-  DataSaverOffOutlined,
-  SummarizeOutlined,
-} from "@mui/icons-material";
 import { useTheme } from "@mui/material";
 
-// import PersonIcon from "@mui/icons-material/Person";
-
-// import AssignmentIcon from "@mui/icons-material/Assignment";
-
-// import Inventory2Icon from "@mui/icons-material/Inventory2";
-
-export const menus = [
-  {
-    id: 1,
-    route: {
-      name: "dashboard",
-      title: "Home",
-      icon: <DashboardIcon sx={{ color: "black" }} />,
-    },
-    active: true,
-  },
-  {
-    id: 2,
-    route: {
-      name: "trade-management",
-      title: "Trade Management",
-      icon: <DataSaverOffOutlined sx={{ color: "black" }} />,
-    },
-    active: false,
-  },
-  {
-    id: 3,
-    route: {
-      name: "reports",
-      title: "Generate Reports",
-      icon: <SummarizeOutlined sx={{ color: "black" }} />,
-    },
-    active: false,
-  },
-];
+const drawerWidth = 240;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
   ({ theme, open }) => ({
@@ -120,7 +78,13 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   justifyContent: "flex-end",
 }));
 
-const Drawer = ({ children, open, handleDrawerClose, handleMenuClick }) => {
+const Drawer = ({
+  children,
+  open,
+  handleDrawerClose,
+  handleMenuClick,
+  menus,
+}) => {
   const theme = useTheme();
 
   return (
@@ -136,8 +100,8 @@ const Drawer = ({ children, open, handleDrawerClose, handleMenuClick }) => {
           "& .MuiDrawer-paper": {
             width: drawerWidth,
             boxSizing: "border-box",
-            // background: `${theme?.palette?.primary?.main}`,
-            // color: "white",
+            background: `${theme?.palette?.primary?.main}`,
+            color: "white",
           },
         }}
         variant="persistent"
@@ -147,9 +111,9 @@ const Drawer = ({ children, open, handleDrawerClose, handleMenuClick }) => {
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "ltr" ? (
-              <ChevronLeftIcon />
+              <ChevronLeftIcon sx={{ color: "#fff" }} />
             ) : (
-              <ChevronRightIcon />
+              <ChevronRightIcon sx={{ color: "#fff" }} />
             )}
           </IconButton>
         </DrawerHeader>

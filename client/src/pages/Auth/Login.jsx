@@ -5,7 +5,7 @@ import { Box, Card, TextField } from "../../constants/muiConstants";
 
 import { blueGrey } from "@mui/material/colors";
 import Typography from "../../components/Typography/Typography";
-import FormButton from "../../components/FormButton/FormButton";
+import FormButton from "../../components/Button/Button";
 import { AuthContext } from "../../components/context/authContext";
 import Notification from "../../components/Notification/Notification";
 import useSnackbar from "../../hooks/useSnackBar";

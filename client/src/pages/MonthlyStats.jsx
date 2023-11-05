@@ -1,8 +1,9 @@
-import { green, red } from "@mui/material/colors";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import TagFacesOutlinedIcon from "@mui/icons-material/TagFacesOutlined";
 import SentimentDissatisfiedOutlinedIcon from "@mui/icons-material/SentimentDissatisfiedOutlined";
 import Typography from "../components/Typography/Typography";
+
+import { useTheme } from "@mui/material";
 
 import { Box, Card, Avatar, Skeleton } from "../constants/muiConstants";
 
@@ -11,13 +12,17 @@ const MonthlyStats = ({
   monthlyStatsLoading,
   monthlyStatsError,
 }) => {
+
+
+  const {theme} = useTheme()
+
   return (
     <>
       {!monthlyStatsLoading ? (
         <Box>
           <Box sx={{ position: "relative", height: "100%" }}>
             <Box sx={{ position: "absolute", top: "-10%", left: "5%" }}>
-              <Avatar sx={{ bgcolor: green[500] }} variant="rounded">
+              <Avatar sx={{ bgcolor: theme?.palette?.primary?.main }} variant="rounded">
                 <AssignmentIcon />
               </Avatar>
             </Box>
@@ -40,7 +45,7 @@ const MonthlyStats = ({
                   sx={{
                     fontSize: "inherit",
                     fontWeight: "800",
-                    color: green["800"],
+                    color: theme?.palette?.primary?.main ,
                     mt: ".5em",
                   }}
                 >
@@ -60,7 +65,7 @@ const MonthlyStats = ({
         <Box>
           <Box sx={{ position: "relative", height: "100%" }}>
             <Box sx={{ position: "absolute", top: "-10%", left: "5%" }}>
-              <Avatar sx={{ bgcolor: red[500] }} variant="rounded">
+              <Avatar sx={{ bgcolor: theme?.palette?.primary?.main  }} variant="rounded">
                 <SentimentDissatisfiedOutlinedIcon />
               </Avatar>
             </Box>
@@ -84,7 +89,7 @@ const MonthlyStats = ({
                   sx={{
                     fontSize: "inherit",
                     fontWeight: "800",
-                    color: red["A700"],
+                    color: theme?.palette?.primary?.main ,
                     mt: ".5em",
                   }}
                 >
@@ -104,7 +109,7 @@ const MonthlyStats = ({
         <Box>
           <Box sx={{ position: "relative", height: "100%" }}>
             <Box sx={{ position: "absolute", top: "-10%", left: "5%" }}>
-              <Avatar sx={{ bgcolor: green[500] }} variant="rounded">
+              <Avatar sx={{ bgcolor: theme?.palette?.primary?.main  }} variant="rounded">
                 <TagFacesOutlinedIcon />
               </Avatar>
             </Box>
@@ -128,7 +133,7 @@ const MonthlyStats = ({
                   sx={{
                     fontSize: "inherit",
                     fontWeight: "800",
-                    color: green["800"],
+                    color: theme?.palette?.primary?.main ,
                     mt: ".5em",
                   }}
                 >

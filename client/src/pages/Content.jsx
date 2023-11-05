@@ -29,9 +29,11 @@ function Content() {
     error: weeklyStatsError,
   } = useGet("trade/weekly-summary", ["weekly-trade-reports"]);
 
-  const {data:monthlyStats,isLoading:monthlyStatsLoading,error:monthlyStatsError} = useGet("trade/monthly-summary",["monthly-trade-reports"])
-
-  console.log(monthlyStats)
+  const {
+    data: monthlyStats,
+    isLoading: monthlyStatsLoading,
+    error: monthlyStatsError,
+  } = useGet("trade/monthly-summary", ["monthly-trade-reports"]);
 
   return (
     <>
@@ -46,7 +48,7 @@ function Content() {
             my: "1em",
           }}
         >
-          OverAll Stats
+          OverAll Stats 🚀
         </Typography>
         <Grid>
           <OverAllStats
@@ -68,7 +70,10 @@ function Content() {
             my: "1em",
           }}
         >
-          Weekly Stats
+          Weekly Stats 🚀{" "}
+          <Typography sx={{ fontSize: ".8rem" }} component={"span"}>
+            (Renew every week)
+          </Typography>
           {weeklyStats ? (
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <Typography
@@ -113,7 +118,10 @@ function Content() {
             my: "1em",
           }}
         >
-          Monthly Stats
+          Monthly Stats 🚀{" "}
+          <Typography sx={{ fontSize: ".8rem" }} component={"span"}>
+            (Renew every month)
+          </Typography>
           {monthlyStats ? (
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <Typography

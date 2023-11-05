@@ -3,10 +3,10 @@ const TradeModel = require("../modals/trade.modal");
 const addATrade = async (req, res) => {
   const user = req.user.userId;
 
-  if (!req.body.trade_name || !req.body.direction) {
+  if (!req.body.trade_name) {
     return res
       .status(400)
-      .json({ status: "error", msg: "no field can be empty" });
+      .json({ status: "error", msg: "trade_name field is important" });
   }
 
   try {
@@ -83,7 +83,7 @@ const updateATrade = async (req, res) => {
         .json({ status: "error", msg: "could not update trade" });
     }
 
-    return res.status(200).json({ data: updatedTrade });
+    return res.status(201).json({ data: updatedTrade });
   } catch (err) {
     res
       .status(500)
@@ -109,7 +109,7 @@ const UpdateProfitAndLoss = async (req, res) => {
 
     foundTrade.save();
 
-    return res.status(200).json({ data: foundTrade });
+    return res.status(201).json({ data: foundTrade });
   } catch (err) {
     console.log(err);
     res
@@ -133,7 +133,7 @@ const deleteATrade = async (req, res) => {
     }
 
     await TradeModel.findByIdAndDelete({ _id: foundTrade._id });
-    res.status(201).json({ data: `deleted ${foundTrade.trade_name}` });
+    res.status(200).json({ data: `deleted ${foundTrade.trade_name}` });
   } catch (err) {
     return res
       .status(500)
@@ -156,7 +156,10 @@ const getWeeklyProfitLoss = async (req, res) => {
       },
       {
         $match: {
-          "trade_history.date": { $gte: currentWeekStart, $lte: upcomingWeekStart },
+          "trade_history.date": {
+            $gte: currentWeekStart,
+            $lte: upcomingWeekStart,
+          },
         },
       },
       {
@@ -167,7 +170,9 @@ const getWeeklyProfitLoss = async (req, res) => {
         },
       },
     ]);
-    res.status(200).json({ data: result,date:{currentWeekStart,upcomingWeekStart} });
+    res
+      .status(200)
+      .json({ data: result, date: { currentWeekStart, upcomingWeekStart } });
   } catch (err) {
     res.status(500).json({ status: "error", msg: `could not update entry` });
   }
@@ -176,7 +181,11 @@ const getWeeklyProfitLoss = async (req, res) => {
 const getMonthlyProfitLoss = async (req, res) => {
   const today = new Date();
   const currentMonthStart = new Date(today.getFullYear(), today.getMonth(), 1);
-  const upcomingMonthStart = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+  const upcomingMonthStart = new Date(
+    today.getFullYear(),
+    today.getMonth() + 1,
+    1
+  );
 
   try {
     const result = await TradeModel.aggregate([
@@ -185,7 +194,10 @@ const getMonthlyProfitLoss = async (req, res) => {
       },
       {
         $match: {
-          "trade_history.date": { $gte: currentMonthStart, $lt: upcomingMonthStart },
+          "trade_history.date": {
+            $gte: currentMonthStart,
+            $lt: upcomingMonthStart,
+          },
         },
       },
       {
@@ -196,7 +208,9 @@ const getMonthlyProfitLoss = async (req, res) => {
         },
       },
     ]);
-    res.status(200).json({ data: result, date: { currentMonthStart, upcomingMonthStart } });
+    res
+      .status(200)
+      .json({ data: result, date: { currentMonthStart, upcomingMonthStart } });
   } catch (err) {
     res.status(500).json({ status: "error", msg: "Could not update entry" });
   }
@@ -223,7 +237,7 @@ const getOverallProfitLoss = async (req, res) => {
 };
 
 const getSpecificMonthAndYearStats = async (req, res) => {
-  const { year, month } = req.query;
+  const { year, month } = req.body;
 
   const startOfMonth = new Date(`${year}-${month}-01`);
   const endOfMonth = new Date(year, month, 0);
@@ -246,9 +260,9 @@ const getSpecificMonthAndYearStats = async (req, res) => {
         },
       },
     ]);
-    res.status(200).json({ data: result });
+    res.status(201).json({ data: result,startOfMonth,endOfMonth });
   } catch (err) {
-    res.status(500).json({ status: "error", msg: `could not update entry` });
+    res.status(500).json({ status: "error", msg: `could not find results` });
   }
 };
 
@@ -269,7 +283,10 @@ const getAllMonthProfitLoss = async (req, res) => {
         },
         {
           $match: {
-            "trade_history.date": { $gte: currentMonthStart, $lt: upcomingMonthStart },
+            "trade_history.date": {
+              $gte: currentMonthStart,
+              $lt: upcomingMonthStart,
+            },
           },
         },
         {
@@ -289,13 +306,24 @@ const getAllMonthProfitLoss = async (req, res) => {
       });
     } catch (err) {
       res.status(500).json({ status: "error", msg: "Could not update entry" });
-      return; 
+      return;
     }
   }
 
   res.status(200).json({ data: results });
 };
 
+const deleteSpecificTrades = async (req, res) => {
+  console.log(req.query.ids);
+  const itemIds = req.query.ids.split(",").map((id) => id);
+
+  try {
+    await TradeModel.deleteMany({ _id: { $in: itemIds } });
+    return res.status(200).json({ data: { msg: "deleted items" } });
+  } catch (err) {
+    res.status(500).json({ status: "error", msg: `could not delete trades ` });
+  }
+};
 
 module.exports = {
   addATrade,
@@ -309,5 +337,6 @@ module.exports = {
   UpdateProfitAndLoss,
   getOverallProfitLoss,
   getSpecificMonthAndYearStats,
-  getAllMonthProfitLoss
+  getAllMonthProfitLoss,
+  deleteSpecificTrades,
 };
