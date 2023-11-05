@@ -12,11 +12,7 @@ const app = express();
 
 //middlwares
 app.use(express.json());
-app.use(
-  cors({
-    origin: "https://uk-trader.vercel.app",
-  })
-);
+app.use(cors({ origin: "https://uk-trader.vercel.app" }));
 
 //requests
 app.use("/user", userRouter);

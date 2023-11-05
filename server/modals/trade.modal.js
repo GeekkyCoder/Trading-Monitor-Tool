@@ -5,7 +5,7 @@ const tradeSchema = new mongoose.Schema(
     trade_name: { type: String, required: true },
     result: {
       type: String,
-      enum: ["win", "loss", "entry Miss", "unknown"],
+      enum: ["win", "loss", "entry Miss", "unknown","entry-miss","break-even"],
       default: "unknown",
     },
     status: { type: String, enum: ["running", "stopped"], default: "running" },
