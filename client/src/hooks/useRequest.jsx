@@ -3,7 +3,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { AuthContext } from "../components/context/authContext";
 
-const BASE_URL = "https://uk-trader-backend-57pq3tt1r-geekkycoder.vercel.app";
+const BASE_URL = "https://uk-trader-backend.vercel.app";
 
 const deleteData = async (endpoint, user) => {
   try {
