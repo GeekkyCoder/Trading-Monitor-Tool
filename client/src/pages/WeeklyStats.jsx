@@ -47,7 +47,7 @@ const WeeklyStats = ({ weeklyStats, weeklyStatsError, weeklyStatsLoading }) => {
                   }}
                 >
                   {weeklyStats?.data[0]?.total_profit
-                    ? weeklyStats?.data[0]?.total_profit
+                    ? parseFloat(weeklyStats?.data[0]?.total_profit).toFixed(2)
                     : parseFloat("0.00").toFixed(2)}
                 </Typography>
               </Typography>
@@ -94,7 +94,7 @@ const WeeklyStats = ({ weeklyStats, weeklyStatsError, weeklyStatsLoading }) => {
                   }}
                 >
                   {weeklyStats?.data[0]?.total_loss
-                    ? weeklyStats?.data[0]?.total_loss
+                    ? parseFloat(weeklyStats?.data[0]?.total_loss).toFixed(2)
                     : parseFloat("0.00").toFixed(2)}
                 </Typography>
               </Typography>

@@ -51,7 +51,7 @@ const OverAllStats = ({
                     mt: ".5em",
                   }}
                 >
-                  {overAllStats?.data[0]?.total_profit}
+                  {parseFloat(overAllStats?.data[0]?.total_profit).toFixed(2)}
                 </Typography>
               </Typography>
             </Card>
@@ -96,7 +96,7 @@ const OverAllStats = ({
                     mt: ".5em",
                   }}
                 >
-                  {overAllStats?.data[0]?.total_loss}
+                  {parseFloat(overAllStats?.data[0]?.total_loss).toFixed(2)}
                 </Typography>
               </Typography>
             </Card>
