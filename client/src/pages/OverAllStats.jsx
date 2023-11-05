@@ -141,11 +141,18 @@ const OverAllStats = ({
                     mt: ".5em",
                   }}
                 >
-                  +{" "}
+                  {overAllStats?.data[0]?.total_profit -
+                    overAllStats?.data[0]?.total_loss >
+                  0
+                    ? "+"
+                    : ""}
                   {overAllStats?.data[0]?.total_profit -
                     overAllStats?.data[0]?.total_loss <
                   0
-                    ? "0.00"
+                    ? parseFloat(
+                        overAllStats?.data[0]?.total_profit -
+                          overAllStats?.data[0]?.total_loss
+                      ).toFixed(2)
                     : parseFloat(
                         overAllStats?.data[0]?.total_profit -
                           overAllStats?.data[0]?.total_loss

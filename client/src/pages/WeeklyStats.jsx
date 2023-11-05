@@ -140,13 +140,20 @@ const WeeklyStats = ({ weeklyStats, weeklyStatsError, weeklyStatsLoading }) => {
                     mt: ".5em",
                   }}
                 >
-                  +{" "}
+                  {weeklyStats?.data[0]?.total_profit -
+                    weeklyStats?.data[0]?.total_loss >
+                  0
+                    ? "+"
+                    : ""}
                   {weeklyStats?.data[0]?.total_profit &&
                   weeklyStats?.data[0]?.total_loss
                     ? weeklyStats?.data[0]?.total_profit -
                         weeklyStats?.data[0]?.total_loss <
                       0
-                      ? "0.00"
+                      ? parseFloat(
+                          weeklyStats?.data[0]?.total_profit -
+                            weeklyStats?.data[0]?.total_loss
+                        ).toFixed(2)
                       : parseFloat(
                           weeklyStats?.data[0]?.total_profit -
                             weeklyStats?.data[0]?.total_loss

@@ -12,9 +12,7 @@ const MonthlyStats = ({
   monthlyStatsLoading,
   monthlyStatsError,
 }) => {
-
-
-  const {theme} = useTheme()
+  const { theme } = useTheme();
 
   return (
     <>
@@ -22,7 +20,10 @@ const MonthlyStats = ({
         <Box>
           <Box sx={{ position: "relative", height: "100%" }}>
             <Box sx={{ position: "absolute", top: "-10%", left: "5%" }}>
-              <Avatar sx={{ bgcolor: theme?.palette?.primary?.main }} variant="rounded">
+              <Avatar
+                sx={{ bgcolor: theme?.palette?.primary?.main }}
+                variant="rounded"
+              >
                 <AssignmentIcon />
               </Avatar>
             </Box>
@@ -45,7 +46,7 @@ const MonthlyStats = ({
                   sx={{
                     fontSize: "inherit",
                     fontWeight: "800",
-                    color: theme?.palette?.primary?.main ,
+                    color: theme?.palette?.primary?.main,
                     mt: ".5em",
                   }}
                 >
@@ -65,7 +66,10 @@ const MonthlyStats = ({
         <Box>
           <Box sx={{ position: "relative", height: "100%" }}>
             <Box sx={{ position: "absolute", top: "-10%", left: "5%" }}>
-              <Avatar sx={{ bgcolor: theme?.palette?.primary?.main  }} variant="rounded">
+              <Avatar
+                sx={{ bgcolor: theme?.palette?.primary?.main }}
+                variant="rounded"
+              >
                 <SentimentDissatisfiedOutlinedIcon />
               </Avatar>
             </Box>
@@ -89,7 +93,7 @@ const MonthlyStats = ({
                   sx={{
                     fontSize: "inherit",
                     fontWeight: "800",
-                    color: theme?.palette?.primary?.main ,
+                    color: theme?.palette?.primary?.main,
                     mt: ".5em",
                   }}
                 >
@@ -109,7 +113,10 @@ const MonthlyStats = ({
         <Box>
           <Box sx={{ position: "relative", height: "100%" }}>
             <Box sx={{ position: "absolute", top: "-10%", left: "5%" }}>
-              <Avatar sx={{ bgcolor: theme?.palette?.primary?.main  }} variant="rounded">
+              <Avatar
+                sx={{ bgcolor: theme?.palette?.primary?.main }}
+                variant="rounded"
+              >
                 <TagFacesOutlinedIcon />
               </Avatar>
             </Box>
@@ -133,16 +140,28 @@ const MonthlyStats = ({
                   sx={{
                     fontSize: "inherit",
                     fontWeight: "800",
-                    color: theme?.palette?.primary?.main ,
+                    color: theme?.palette?.primary?.main,
                     mt: ".5em",
                   }}
                 >
-                  +{" "}
+                  {monthlyStats?.data[0]?.total_profit -
+                    monthlyStats?.data[0]?.total_loss >
+                  0
+                    ? "+"
+                    : ""}
                   {monthlyStats?.data[0]?.total_profit &&
                   monthlyStats?.data[0]?.total_loss
                     ? monthlyStats?.data[0]?.total_profit -
-                      monthlyStats?.data[0]?.total_loss < 0 ? "0.00" : parseFloat(monthlyStats?.data[0]?.total_profit -
-                        monthlyStats?.data[0]?.total_loss).toFixed(2)
+                        monthlyStats?.data[0]?.total_loss <
+                      0
+                      ? parseFloat(
+                          monthlyStats?.data[0]?.total_profit -
+                            monthlyStats?.data[0]?.total_loss
+                        ).toFixed(2)
+                      : parseFloat(
+                          monthlyStats?.data[0]?.total_profit -
+                            monthlyStats?.data[0]?.total_loss
+                        ).toFixed(2)
                     : parseFloat("0.00")}
                 </Typography>
               </Typography>
