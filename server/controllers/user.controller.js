@@ -54,7 +54,7 @@ const loginUser = async (req, res) => {
     }
 
     const token = await generateToken(foundUser);
-    return res.status(200).json({ data: foundUser, token });
+    return res.status(201).json({ data: foundUser, token });
   } catch (err) {
     return res
       .status(500)
