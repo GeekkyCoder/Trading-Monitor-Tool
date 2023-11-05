@@ -15,8 +15,8 @@ const tradeSchema = yup.object().shape({
   result: yup
     .string()
     .oneOf(
-      ["win", "loss", "entry", "unknown"],
-      "Invalid result. It can be win, loss,entry or unknown"
+      ["win", "loss", "unknown","break-even","entry-miss"],
+      "Invalid result. It can be win, loss,entry-miss,break-even or unknown"
     ),
   risk_reward: yup.string().required("can be set as 0 by default"),
   status: yup

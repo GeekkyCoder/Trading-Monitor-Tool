@@ -54,7 +54,7 @@ const columns = [
               fontWeight: "300",
             }}
           >
-            {param.row?.profit}
+            {parseFloat(param.row?.profit).toFixed(2)}
           </Typography>
         </>
       );
@@ -76,7 +76,7 @@ const columns = [
               fontWeight: "300",
             }}
           >
-            {param?.row?.loss}
+            {parseFloat(param.row?.loss).toFixed(2)}
           </Typography>
         </>
       );
@@ -99,6 +99,28 @@ const columns = [
             }}
           >
             {param?.row?.result || "null"}
+          </Typography>
+        </>
+      );
+    },
+  },
+  {
+    field: "direction",
+    headerName: "Direction",
+    width: 100,
+    editable: true,
+    disableExport: false,
+    renderCell: (param) => {
+      return (
+        <>
+          <Typography
+            component={"div"}
+            variant="p"
+            sx={{
+              fontWeight: "300",
+            }}
+          >
+            {param?.row?.direction || "null"}
           </Typography>
         </>
       );
@@ -142,7 +164,7 @@ const columns = [
               fontWeight: "300",
             }}
           >
-            {param?.row?.risk_reward || "null"}
+            {parseFloat(param?.row?.risk_reward).toFixed(2) || "null"}
           </Typography>
         </>
       );

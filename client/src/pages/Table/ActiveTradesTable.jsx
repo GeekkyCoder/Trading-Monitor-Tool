@@ -47,7 +47,7 @@ const columns = [
     renderCell: (param) => {
       return (
         <Typography component={"span"} variant={"p"} sx={{ mr: ".5em" }}>
-          {param?.row?.profit}
+          {parseFloat(param?.row?.profit).toFixed(2)}
         </Typography>
       );
     },
@@ -61,7 +61,7 @@ const columns = [
     renderCell: (param) => {
       return (
         <Typography component={"span"} variant={"p"} sx={{ mr: ".5em" }}>
-          {param?.row?.loss}
+          {parseFloat(param?.row?.loss).toFixed(2)}
         </Typography>
       );
     },
@@ -148,7 +148,7 @@ const columns = [
               fontWeight: "300",
             }}
           >
-            {param?.row?.risk_reward || "null"}
+            {parseFloat(param?.row?.risk_reward).toFixed(2) || "null"}
           </Typography>
         </>
       );
